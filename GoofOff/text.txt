@@ -1,0 +1,10 @@
+
+I have created a text file
+
+Now I'm adding to the file
+
+I need to figure out how to call Sublime from the command line
+
+So now Sublime is opening from the command line and I'm awesomes
+
+jmr
