@@ -8,4 +8,6 @@ OK now I'll edit this here and push it back up to GitHub.
 
 OK now I'll practice adding first before committing.
 
+Now I want to pull this change down to my local repo.
+
 jmr
