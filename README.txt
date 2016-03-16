@@ -10,9 +10,6 @@ OK now I'll practice adding first before committing.
 
 Now I want to pull this change down to my local repo.
 
-<<<<<<< HEAD
 OK.  One last change!
 
-=======
->>>>>>> 311893af5a30c42111cf6637f28906610856a95a
 jmr
