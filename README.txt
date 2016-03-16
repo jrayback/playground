@@ -10,4 +10,6 @@ OK now I'll practice adding first before committing.
 
 Now I want to pull this change down to my local repo.
 
+OK.  One last change!
+
 jmr
