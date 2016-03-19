@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "Make this deploy everything in this directory to the correct web directory..."
