@@ -1,2 +1,11 @@
 #!/bin/bash
-echo "Make this deploy everything in this directory to the correct web directory..."
+if [ $1 ]; then
+	if [ -d $1 ]; then
+		echo "Deploy this site: $1"
+	else
+		echo "No such site!"
+	fi
+else
+	echo "No site specified..."
+fi
+#tar -czf $1.tar.gz
