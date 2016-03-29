@@ -1,11 +1,18 @@
 #!/bin/bash
-if [ $1 ]; then
-	if [ -d $1 ]; then
-		echo "Deploy this site: $1"
+siteName=$1
+archive=$siteName.tar.gz
+deployLocation=/www/sites
+
+if [ $siteName ]; then
+	if [ -d $siteName ]; then
+		echo "Deploying this site: $siteName"
+		echo "Creating archive..."
+		tar -czf $archive $siteName
+		echo "Moving archive"
+		mv $archive  $deployLocation
 	else
 		echo "No such site!"
 	fi
 else
-	echo "No site specified..."
+	echo "No site specified."
 fi
-#tar -czf $1.tar.gz
