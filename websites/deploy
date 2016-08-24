@@ -1,17 +1,41 @@
 #!/bin/bash
 siteName=$1
-archive=$siteName.tar.gz
-deployLocation=/www/sites
+deployLocation=$2
+#archive=$siteName.tar.gz
+#deployLocation=/www/sites
+
+# if [ $siteName ]; then
+# 	if [ -d $siteName ]; then
+# 		echo "Deploying this site: $siteName"
+# 		echo "Creating archive..."
+# 		tar -czf $archive $siteName
+# 		echo "Moving archive"
+# 		mv $archive  $deployLocation
+# 		echo "Unzipping..."
+# 		tar -xzvf $deployLocation/$archive
+# 	else
+# 		echo "No such site!"
+# 	fi
+# else
+# 	echo "No site specified."
+# fi
 
 if [ $siteName ]; then
 	if [ -d $siteName ]; then
-		echo "Deploying this site: $siteName"
-		echo "Creating archive..."
-		tar -czf $archive $siteName
-		echo "Moving archive"
-		mv $archive  $deployLocation
+		if [ $deployLocation ]; then
+			if [ -d $deployLocation ]; then
+				echo "Deploying this site: $siteName"
+				echo "Copying files..."
+				cp -Rv $siteName $deployLocation
+				echo "Done."
+			else
+				echo "No such destination."
+			fi
+		else
+			echo "No destination specified."
+		fi
 	else
-		echo "No such site!"
+		echo "No such site."
 	fi
 else
 	echo "No site specified."
