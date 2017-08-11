@@ -2,10 +2,12 @@ import tornado.ioloop
 import tornado.web
 import checkAnagram
 
+string1 = 'iceman'
+string2 = 'cinema'
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-    	string1 = 'ickeman'
-    	string2 = 'cinema'
+   		
     	result = 'true' if checkAnagram.checkAnagram(string1,string2) else 'false'
         self.write("<head></head><body><h1 style=\"color:green;\">" + result + "</h1></body>")
 
