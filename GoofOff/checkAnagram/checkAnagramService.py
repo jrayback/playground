@@ -1,18 +1,23 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from flask.ext.jsonpify import jsonify
+from flask_jsonpify import jsonify
 from checkAnagram import checkAnagram
 
 app = Flask(__name__)
 api = Api(app)
 
 class CheckAnagram(Resource):
-	# Default values for 'GET'
-	string1 = 'iceman'
-	string2 = 'cinema'	
+	
+	#TODO - need error handling in case either(?)/both(?) strings are missing from the query string
+
+	# Set up strings to compare
+	#string1 = request.args.get('first')
+	#string2 = request.args.get('second')
 
 	def get(self): # Define the 'GET' verb for RESTful API
-		result = {'First String': self.string1, 'Second String': self.string2, 'isAnagram': str(check(self.string1, self.string2))}
+		result = {'First String': request.args.get('first'), 
+					'Second String': request.args.get('second'), 
+					'isAnagram': str(check(request.args.get('first'), request.args.get('second')))}
 		return jsonify(result)
 	
 def check(str1, str2):
