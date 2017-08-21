@@ -3,6 +3,20 @@ from checkAnagram import checkAnagram
 
 class TestCheckAnagram(unittest.TestCase) :
 
+	@classmethod
+	def setUpClass(cls):
+		pass
+
+	@classmethod
+	def tearDownClass(cls):
+		pass
+
+	def setUp(self):
+		pass
+
+	def tearDown(self):
+		pass
+
 	def test_simple(self) :
 		str1 = 'cinema'
 		str2 = 'iceman'
