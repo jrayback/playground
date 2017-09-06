@@ -25,6 +25,3 @@ def check_anagram():
 		result = {'Error': 'Need values for first and second to be passed in the query string.'}
 	
 	return jsonify(result), status_code
-
-if __name__ == '__main__':
-	app.run(port='5003')
