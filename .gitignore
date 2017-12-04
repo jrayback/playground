@@ -406,3 +406,6 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+
+#  Shapefiles for my geocoding test project
+Shapefiles
