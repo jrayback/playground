@@ -41,4 +41,4 @@ for i in range(len(all_shapes)):
        name = all_records[i][2] # get the second field of the corresponding record
        print "The point is in", name
 
-#Change to practice git integration in vs code
+#Change to practice git integration in vs code - just a test.
