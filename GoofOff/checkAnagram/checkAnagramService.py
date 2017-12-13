@@ -9,7 +9,6 @@ def check(str1, str2):
 	"""Check two strings and return true if they are anagrams"""
 	return checkAnagram(str1, str2)
 
-
 @app.route('/comparison', methods=['GET'])
 def check_anagram():
 	first_string = request.args.get('first')
