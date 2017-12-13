@@ -6,14 +6,16 @@ from checkAnagram import checkAnagram
 app = Flask(__name__)
 
 def check(str1, str2):
+	"""Check two strings and return true if they are anagrams"""
 	return checkAnagram(str1, str2)
+
 
 @app.route('/comparison', methods=['GET'])
 def check_anagram():
 	first_string = request.args.get('first')
 	second_string = request.args.get('second')
 	status_code = status.HTTP_400_BAD_REQUEST
-	
+
 	# As long as both values were passed in the query string, check the anagram and return 200
 	if first_string is not None and second_string is not None:
 		result = {'First String': first_string, 
