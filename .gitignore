@@ -409,3 +409,11 @@ OpenCover/
 
 #  Shapefiles for my geocoding test project
 Shapefiles
+
+# Exclude VS Code settings
+.vscode
+#.vscode/*
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
