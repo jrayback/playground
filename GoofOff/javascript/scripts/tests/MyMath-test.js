@@ -1,5 +1,5 @@
-const chai = require('chai');
-const assert = chai.assert;
+const chai = require('chai')
+const assert = chai.assert
 const MyMath = require('../MyMath')
 
 describe('FIBONACCI TESTS', function(){
