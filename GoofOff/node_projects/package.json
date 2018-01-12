@@ -10,11 +10,14 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1"
   },
-  "eslintConfig" : {
+  "eslintConfig": {
     "extends": "standard",
-    "env":{
+    "env": {
       "node": true,
       "mocha": true
     }
+  },
+  "devDependencies": {
+    "chai": "^4.1.2"
   }
 }
