@@ -21,12 +21,50 @@ class MyEncoder {
     // the array we use to get indexes mapping letters into our coding series
     let indexes = Array.from('abcdefghijklmnopqrstuvwxyz')
     // Encoder function uses Fibonacci for now
-    let substitutes = this.math.fib(26)
+    let substitutes = this.math.fib(26) // 26 is magic number, where to put?
     for (let char of lowerCases) {
       let i = indexes.indexOf(char)
       encodedMessage += substitutes[i]
     }
     return encodedMessage
+  }
+  decode (message) {
+    let decodedMessage = ''
+    let letters = Array.from('abcdefghijklmnopqrstuvwxyz')
+    let codes = this._generateCharArray() // put in ctor, duplicated below
+    let keys = this._parseKeys(message, 6) // 6 is magic number, where to put it?
+    for (let key of keys) {
+      let i = codes.indexOf(key)
+      decodedMessage += letters[i]
+    }
+    return decodedMessage
+  }
+  // I NEED TO BREAK THIS OUT INTO A SEPARATE PARSING STATIC CLASS WITH A parseFib() FUNCTION THEN SET THIS INSTANCE
+  // OF THE DECODER TO USE THE FIB PARSER
+  _parseKeys (message, maxKeyLength) {
+    let keys = []
+    let codes = this._generateCharArray() // put in ctor? duplicated above
+    let beginIndex = 0
+    let endIndex = message.length >= maxKeyLength ? maxKeyLength : message.length
+    while (endIndex <= message.length && beginIndex !== endIndex) {
+      let tryThis = message.slice(beginIndex, endIndex)
+      while (codes.indexOf(tryThis) === -1) {
+        tryThis = message.slice(beginIndex, --endIndex)
+      }
+      keys.push(tryThis)
+      beginIndex = endIndex
+      endIndex = message.length >= (endIndex + maxKeyLength) ? (endIndex + maxKeyLength) : message.length
+    }
+    return keys
+  }
+  _generateCharArray () {
+    // uses Fibonacci for now
+    let values = this.math.fib(26) // 26 is magic number, where to put?
+    let fibChars = []
+    for (let i of values) {
+      fibChars.push(i.toString())
+    }
+    return fibChars
   }
 };
 

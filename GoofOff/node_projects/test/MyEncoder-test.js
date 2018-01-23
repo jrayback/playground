@@ -45,6 +45,49 @@ describe('ENCODING TESTS', () => {
   })
 })
 
+describe('DECODING TESTS', () => {
+  let myEncoder
+
+  before(() => {
+    myEncoder = new MyEncoder()
+  })
+
+  it('Should return a if 0 is passed in', () => {
+    let actual = myEncoder.decode('0')
+    let expected = 'a'
+    assert.equal(actual, expected)
+  })
+  it('Should return aa if 00 is passed in', () => {
+    let actual = myEncoder.decode('00')
+    let expected = 'aa'
+    assert.equal(actual, expected)
+  })
+  it('Should return az if 0121393 is passed in', () => {
+    let actual = myEncoder.decode('0121393')
+    let expected = 'az'
+    assert.equal(actual, expected)
+  })
+  it('Should return ambcdzbcdbcm if 023312312139312312233 is passed in', () => {
+    let actual = myEncoder.decode('023312312139312312233')
+    let expected = 'ambcdzbcdbcm'
+    assert.equal(actual, expected)
+  })
+})
+
+describe('PARSING TESTS', () => {
+  let myEncoder
+
+  before(() => {
+    myEncoder = new MyEncoder()
+  })
+
+  it('Should return [0, 121393, 2584, 0] if 012139325840 is passed in', () => {
+    let actual = myEncoder._parseKeys('012139325840', 6)
+    let expected = ['0', '121393', '2584', '0']
+    assert.deepEqual(actual, expected)
+  })
+})
+
 /*
 [ 0, a
   1, b
