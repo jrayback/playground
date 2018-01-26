@@ -1,5 +1,6 @@
 const MyMath = require('./MyMath')
 
+// Helper function to turn array of ints into chars -- native JS way to do this?
 function generateCharsFromInts (intArray) {
   let fibChars = []
   for (let i of intArray) {
@@ -8,7 +9,26 @@ function generateCharsFromInts (intArray) {
   return fibChars
 }
 
-// Ultimately I could abstract this class to use different substitution ciphers
+// Holds the static parsing method
+function MyParser () { }
+
+MyParser.parseKeys = function (cipherText, cipherUnits, maxCipherUnitLength) {
+  let keys = []
+  let beginIndex = 0
+  let endIndex = cipherText.length >= maxCipherUnitLength ? maxCipherUnitLength : cipherText.length
+  while (endIndex <= cipherText.length && beginIndex !== endIndex) {
+    let tryThis = cipherText.slice(beginIndex, endIndex)
+    while (cipherUnits.indexOf(tryThis) === -1) {
+      tryThis = cipherText.slice(beginIndex, --endIndex)
+    }
+    keys.push(tryThis)
+    beginIndex = endIndex
+    endIndex = cipherText.length >= (endIndex + maxCipherUnitLength) ? (endIndex + maxCipherUnitLength) : cipherText.length
+  }
+  return keys
+}
+
+// Ultimately I could abstract this class to take different substitution ciphers
 class FibEncoder {
   constructor () {
     // This is couples to Fibonacci.
@@ -39,29 +59,16 @@ class FibEncoder {
   }
   decode (cipherText) {
     let plainText = ''
-    let keys = this._parseKeys(cipherText, 6) // 6 is magic number, where to put it?
+    let keys = this._parseKeys(cipherText)
     for (let key of keys) {
       let i = this.cipherUnits.indexOf(key)
       plainText += this.plainUnits[i]
     }
     return plainText
   }
-  // I NEED TO BREAK THIS OUT INTO A SEPARATE PARSING STATIC CLASS WITH A parseFib() FUNCTION THEN SET THIS INSTANCE
-  // OF THE DECODER TO USE THE FIB PARSER
-  _parseKeys (message, maxKeyLength) {
-    let keys = []
-    let beginIndex = 0
-    let endIndex = message.length >= maxKeyLength ? maxKeyLength : message.length
-    while (endIndex <= message.length && beginIndex !== endIndex) {
-      let tryThis = message.slice(beginIndex, endIndex)
-      while (this.cipherUnits.indexOf(tryThis) === -1) {
-        tryThis = message.slice(beginIndex, --endIndex)
-      }
-      keys.push(tryThis)
-      beginIndex = endIndex
-      endIndex = message.length >= (endIndex + maxKeyLength) ? (endIndex + maxKeyLength) : message.length
-    }
-    return keys
+  _parseKeys (text) {
+    // use the static parsing method, sending in specifics for this encode/decode scheme
+    return MyParser.parseKeys(text, this.cipherUnits, 6) // 6 is a magic number, where to put it?
   }
 };
 
