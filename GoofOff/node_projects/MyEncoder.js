@@ -3,6 +3,8 @@ const MyMath = require('./MyMath')
 class MyEncoder {
   constructor () {
     this.math = new MyMath()
+    this.fibValues = this.math.fib(26) // 26 is magic number...resolve this
+    this.fibChars = generateCharsFromInts(this.fibValues) // put in ctor? duplicated above
   }
   encode (message) {
     let encodedMessage = ''
@@ -31,7 +33,7 @@ class MyEncoder {
   decode (message) {
     let decodedMessage = ''
     let letters = Array.from('abcdefghijklmnopqrstuvwxyz')
-    let codes = this._generateCharArray() // put in ctor, duplicated below
+    let codes = this.fibChars
     let keys = this._parseKeys(message, 6) // 6 is magic number, where to put it?
     for (let key of keys) {
       let i = codes.indexOf(key)
@@ -43,7 +45,7 @@ class MyEncoder {
   // OF THE DECODER TO USE THE FIB PARSER
   _parseKeys (message, maxKeyLength) {
     let keys = []
-    let codes = this._generateCharArray() // put in ctor? duplicated above
+    let codes = this.fibChars
     let beginIndex = 0
     let endIndex = message.length >= maxKeyLength ? maxKeyLength : message.length
     while (endIndex <= message.length && beginIndex !== endIndex) {
@@ -57,15 +59,13 @@ class MyEncoder {
     }
     return keys
   }
-  _generateCharArray () {
-    // uses Fibonacci for now
-    let values = this.math.fib(26) // 26 is magic number, where to put?
-    let fibChars = []
-    for (let i of values) {
-      fibChars.push(i.toString())
-    }
-    return fibChars
-  }
 };
 
+function generateCharsFromInts (intArray) {
+  let fibChars = []
+  for (let i of intArray) {
+    fibChars.push(i.toString())
+  }
+  return fibChars
+}
 module.exports = MyEncoder
