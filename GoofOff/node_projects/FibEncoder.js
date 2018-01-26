@@ -1,10 +1,19 @@
 const MyMath = require('./MyMath')
 
-class MyEncoder {
+function generateCharsFromInts (intArray) {
+  let fibChars = []
+  for (let i of intArray) {
+    fibChars.push(i.toString())
+  }
+  return fibChars
+}
+
+// Ultimately I could abstract this class to use different substitution ciphers
+class FibEncoder {
   constructor () {
     this.math = new MyMath()
-    this.fibValues = this.math.fib(26) // 26 is magic number...resolve this
-    this.fibChars = generateCharsFromInts(this.fibValues) // put in ctor? duplicated above
+    this.plainUnits = Array.from('abcdefghijklmnopqrstuvwxyz')
+    this.cipherUnits = generateCharsFromInts(this.math.fib(26)) // 26 is magic number...also we're tightly coupled to fibonacci
   }
   encode (message) {
     let encodedMessage = ''
@@ -20,24 +29,18 @@ class MyEncoder {
     let noSpaces = lowerMsg.replace(/\s/g, '')
     // make an array of the lowercase characters
     let lowerCases = Array.from(noSpaces)
-    // the array we use to get indexes mapping letters into our coding series
-    let indexes = Array.from('abcdefghijklmnopqrstuvwxyz')
-    // Encoder function uses Fibonacci for now
-    let substitutes = this.math.fib(26) // 26 is magic number, where to put?
     for (let char of lowerCases) {
-      let i = indexes.indexOf(char)
-      encodedMessage += substitutes[i]
+      let i = this.plainUnits.indexOf(char)
+      encodedMessage += this.cipherUnits[i]
     }
     return encodedMessage
   }
   decode (message) {
     let decodedMessage = ''
-    let letters = Array.from('abcdefghijklmnopqrstuvwxyz')
-    let codes = this.fibChars
     let keys = this._parseKeys(message, 6) // 6 is magic number, where to put it?
     for (let key of keys) {
-      let i = codes.indexOf(key)
-      decodedMessage += letters[i]
+      let i = this.cipherUnits.indexOf(key)
+      decodedMessage += this.plainUnits[i]
     }
     return decodedMessage
   }
@@ -45,12 +48,11 @@ class MyEncoder {
   // OF THE DECODER TO USE THE FIB PARSER
   _parseKeys (message, maxKeyLength) {
     let keys = []
-    let codes = this.fibChars
     let beginIndex = 0
     let endIndex = message.length >= maxKeyLength ? maxKeyLength : message.length
     while (endIndex <= message.length && beginIndex !== endIndex) {
       let tryThis = message.slice(beginIndex, endIndex)
-      while (codes.indexOf(tryThis) === -1) {
+      while (this.cipherUnits.indexOf(tryThis) === -1) {
         tryThis = message.slice(beginIndex, --endIndex)
       }
       keys.push(tryThis)
@@ -61,11 +63,4 @@ class MyEncoder {
   }
 };
 
-function generateCharsFromInts (intArray) {
-  let fibChars = []
-  for (let i of intArray) {
-    fibChars.push(i.toString())
-  }
-  return fibChars
-}
-module.exports = MyEncoder
+module.exports = FibEncoder

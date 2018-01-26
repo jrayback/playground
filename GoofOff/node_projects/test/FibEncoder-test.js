@@ -1,45 +1,45 @@
 const chai = require('chai')
 const assert = chai.assert
-const MyEncoder = require('../MyEncoder')
+const FibEncoder = require('../FibEncoder')
 
 describe('ENCODING TESTS', () => {
-  let myEncoder
+  let fibEncoder
 
   before(() => {
-    myEncoder = new MyEncoder()
+    fibEncoder = new FibEncoder()
   })
 
   it('Should return 0 if a is passed in', () => {
-    let actual = myEncoder.encode('a')
+    let actual = fibEncoder.encode('a')
     let expected = '0'
     assert.equal(actual, expected)
   })
   it('Should return 00 if aa is passed in', () => {
-    let actual = myEncoder.encode('aa')
+    let actual = fibEncoder.encode('aa')
     let expected = '00'
     assert.equal(actual, expected)
   })
   it('Should return 00 if aA is passed in', () => {
-    let actual = myEncoder.encode('aA')
+    let actual = fibEncoder.encode('aA')
     let expected = '00'
     assert.equal(actual, expected)
   })
   it('Should return 01 if ab is passed in', () => {
-    let actual = myEncoder.encode('ab')
+    let actual = fibEncoder.encode('ab')
     let expected = '01'
     assert.equal(actual, expected)
   })
   it('Should return 0121393 if az is passed in', () => {
-    let actual = myEncoder.encode('az')
+    let actual = fibEncoder.encode('az')
     let expected = '0121393'
     assert.equal(actual, expected)
   })
   it('Should handle error if non-alpha characters are passed in', () => {
     // need to use Function.prototype.bind() here to create a copy of my function to pass into the doesNotThrow() method
-    assert.doesNotThrow(myEncoder.encode.bind(myEncoder, 'a1$-~'))
+    assert.doesNotThrow(fibEncoder.encode.bind(fibEncoder, 'a1$-~'))
   })
   it('Should ignore spaces', () => {
-    let actual = myEncoder.encode('a a')
+    let actual = fibEncoder.encode('a a')
     let expected = '00'
     assert.equal(actual, expected)
   })
@@ -49,7 +49,7 @@ describe('DECODING TESTS', () => {
   let myEncoder
 
   before(() => {
-    myEncoder = new MyEncoder()
+    myEncoder = new FibEncoder()
   })
 
   it('Should return a if 0 is passed in', () => {
@@ -78,7 +78,7 @@ describe('PARSING TESTS', () => {
   let myEncoder
 
   before(() => {
-    myEncoder = new MyEncoder()
+    myEncoder = new FibEncoder()
   })
 
   it('Should return [0, 121393, 2584, 0] if 012139325840 is passed in', () => {
