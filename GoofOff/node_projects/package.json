@@ -17,5 +17,8 @@
       "node": true,
       "mocha": true
     }
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1"
   }
 }
