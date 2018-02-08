@@ -27,7 +27,7 @@ function helloWorld () {
 function addIntroduction (message) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const succeed = false // see above
+      const succeed = true // see above
       const name = 'Jonathan'
       succeed ? resolve(`${message} My name is ${name}.`) : reject(new Error("Couldn't get name..."))
     },
