@@ -1,14 +1,18 @@
 // JUST TEST FILES TO TRY TO WORK WITH PROMISES
 const Promise = require('bluebird')
+const fs = Promise.promisifyAll(require('fs'))
 
-// This function calls an "API", getting back results asynchronously and progressively passing through methods
-// that incrementally build out the complete introduction
+// This function calls an "API", getting back results asynchronously, some from file system,
+// and progressively passing through methods that incrementally build out the complete introduction
 function constructIntroduction () {
-  return new Promise((resolve, reject) => {
-    resolve(helloWorld()
-      .then(helloMessage => addIntroduction(helloMessage))
-      .then(helloAndIntro => addJobInfo(helloAndIntro))
-    )
+  return getNewspaperFromFile().then(newspaper => {
+    return new Promise((resolve, reject) => {
+      resolve(helloWorld()
+        .then(helloMessage => addIntroduction(helloMessage))
+        .then(helloAndIntro => addJobInfo(helloAndIntro))
+        .then(helloIntroAndJob => addFileNewspaper(helloIntroAndJob, newspaper))
+      )
+    })
   })
 }
 
@@ -17,7 +21,7 @@ function constructIntroduction () {
 function helloWorld () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const succeed = true // let's me toggle back and forth to simulate getting errors from API
+      const succeed = true // lets me toggle back and forth to simulate getting errors from API
       succeed ? resolve('Hello World!') : reject(new Error("Couldn't get greeting..."))
     },
     3000)
@@ -41,6 +45,21 @@ function addJobInfo (message) {
       const succeed = true // see above
       const job = 'software developer'
       succeed ? resolve(`${message} My job is ${job}.`) : reject(new Error("Couldn't get job..."))
+    },
+    600)
+  })
+}
+
+function getNewspaperFromFile () {
+  const filePath = './newspaper.data'
+  return fs.readFileAsync(filePath, 'utf8')
+}
+
+function addFileNewspaper (message, newspaper) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const succeed = true // see above
+      succeed ? resolve(`${message} I read the ${newspaper}.`) : reject(new Error("Couldn't get newspaper..."))
     },
     600)
   })

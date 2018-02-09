@@ -12,7 +12,7 @@ describe('BLUEBIRD PROMISE TESTS', function () {
     assert.isTrue(expected)
   })
   it('Should return the correct string', function () {
-    let expected = 'Hello World! My name is Jonathan. My job is software developer.'
+    let expected = 'Hello World! My name is Jonathan. My job is software developer. I read the Wall Street Journal.'
     return assert.eventually.equal(Promise.resolve(helloWorld()), expected)
   })
 })
