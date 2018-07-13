@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const max = 6
+
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max))
+}
 
 app.use((request, response, next) => {
   console.log(request.headers)
@@ -8,7 +13,8 @@ app.use((request, response, next) => {
 })
 
 app.use((request, response, next) => {
-  request.chance = Math.random()
+  let value = getRandomInt(max)
+  request.chance = value
   next()
 })
 
